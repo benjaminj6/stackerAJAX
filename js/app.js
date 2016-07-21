@@ -111,12 +111,11 @@ function getAnswerers(input) {
 	
 		});
 		console.log(result);
+	})
+	.fail(function(jqXHR, error) { 
+		var errorElem = showError(error);
+		$('.search-results').append(errorElem);
 	});
-
-	/*
-	.fail
-		REUSE THE SHOWERROR FUNCTION FROM OTHER REQUEST
-*/
 }
 
 function showAnswererHeading(tag) {
