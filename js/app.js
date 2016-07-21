@@ -130,8 +130,10 @@ function showAnswerers(answerer) {
 	var result = $('.templates .answerer').clone();
 
 	//set the name equal to the user name and links to profile
-	var userNameElem = result.find('.name a');
-	userNameElem.attr('href', answerer.user.link);
+	var userNameElem = result.find('.name');
+	userNameElem.html('<p> Name: <a target="blank" ' +
+		'href=https://stackoverflow.com/users/' + answerer.user.user_id + 
+		'>' + answerer.user.display_name + '</a></p>');
 	userNameElem.text(answerer.user.display_name);
 
 	//Displays the answerer's reputation
