@@ -81,6 +81,69 @@ var getUnanswered = function(tags) {
 	});
 };
 
+// --------------------------------------------------------
+
+function getAnswerers(input) { 
+	// takes a string as the parameter and makes a request to AJAX.
+
+	//then returns by either appending the results or with an error message.
+
+
+	var params = {
+		tag: input,
+		site: 'stackoverflow',
+	};
+
+	$.ajax({
+		url: "http://api.stackexchange.com/2.2/tags/" + params.tag + "/top-answerers/all_time?",
+		data: params,
+		dataType: "jsonp",
+	})
+	.done(function(result){ //changes the search-results text
+		var answererHeading = showAnswererHeading(input);
+
+		$('.search-results').html(answererHeading);
+		$.each(result.items, function(index, item) {
+			//function that creates the html to be appended
+			var answerer = showAnswerers(item);
+			//$ that appends the return of this function to div.result
+			$('.results').append(answerer);
+	
+		});
+		console.log(result);
+	});
+
+	/*
+	.fail
+		REUSE THE SHOWERROR FUNCTION FROM OTHER REQUEST
+*/
+}
+
+function showAnswererHeading(tag) {
+	var heading = 'Top Answerers for <strong>"' + tag + '":</strong>';
+	return heading;
+}
+
+// generates the html to be inserted for a single answerer
+function showAnswerers(answerer) {
+	//clone the answerer template
+	var result = $('.templates .answerer').clone();
+
+	//set the name equal to the user name and links to profile
+	var userNameElem = result.find('.name a');
+	userNameElem.attr('href', answerer.user.link);
+	userNameElem.text(answerer.user.display_name);
+
+	//Displays the answerer's reputation
+	var reputation = result.find('.reputation');
+	reputation.text(answerer.user.reputation);
+
+	//Displays the post-count of the answerer
+	var postCount = result.find('.post-count');
+	postCount.text(answerer.post_count);
+
+	return result;		
+}
 
 $(document).ready( function() {
 	$('.unanswered-getter').submit( function(e){
@@ -91,4 +154,16 @@ $(document).ready( function() {
 		var tags = $(this).find("input[name='tags']").val();
 		getUnanswered(tags);
 	});
+
+	//event handler for submission of inspiration-getter
+	$('.inspiration-getter').submit(function(event) {
+		event.preventDefault();
+		$('.results').empty();
+		var input = $(this).find("input[name=answerers]").val();
+		getAnswerers(input);
+	})	
+
+
 });
+
+
