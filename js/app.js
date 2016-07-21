@@ -22,7 +22,7 @@ var showQuestion = function(question) {
 	// set some properties related to asker
 	var asker = result.find('.asker');
 	asker.html('<p>Name: <a target="_blank" '+
-		'href=https://stackoverflow.com/users/' + question.owner.user_id + ' >' +
+		'href=//stackoverflow.com/users/' + question.owner.user_id + ' >' +
 		question.owner.display_name +
 		'</a></p>' +
 		'<p>Reputation: ' + question.owner.reputation + '</p>'
@@ -59,7 +59,7 @@ var getUnanswered = function(tags) {
 	};
 	
 	$.ajax({
-		url: "https://api.stackexchange.com/2.2/questions/unanswered",
+		url: "//api.stackexchange.com/2.2/questions/unanswered",
 		data: request,
 		dataType: "jsonp",//use jsonp to avoid cross origin issues
 		type: "GET",
@@ -95,7 +95,7 @@ function getAnswerers(input) {
 	};
 
 	$.ajax({
-		url: "https://api.stackexchange.com/2.2/tags/" + params.tag + "/top-answerers/all_time?",
+		url: "//api.stackexchange.com/2.2/tags/" + params.tag + "/top-answerers/all_time?",
 		data: params,
 		dataType: "jsonp",
 	})
@@ -132,7 +132,7 @@ function showAnswerers(answerer) {
 	//set the name equal to the user name and links to profile
 	var userNameElem = result.find('.name');
 	userNameElem.html('<p> Name: <a target="blank" ' +
-		'href=https://stackoverflow.com/users/' + answerer.user.user_id + 
+		'href=//stackoverflow.com/users/' + answerer.user.user_id + 
 		'>' + answerer.user.display_name + '</a></p>');
 	userNameElem.text(answerer.user.display_name);
 
